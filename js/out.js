@@ -9514,81 +9514,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
       _this3.state = {
         loading: true,
-        infos: []
+        info: {}
       };
       return _this3;
     }
-    // index.html:1 Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 2
-
 
     _createClass(MovieInfo, [{
       key: 'componentDidMount',
       value: function componentDidMount() {
         var _this4 = this;
 
-        fetch('http://www.omdbapi.com/?t=Batman').then(function (resp) {
+        console.log('MovieInfo', this.props.title);
+        if (this.props.title === null) {
+          return null;
+        }
+        fetch('http://www.omdbapi.com/?t=' + this.props.title).then(function (resp) {
           if (resp.ok) {
             return resp.json();
           } else {
             throw new Error("Błąd sieci");
           }
-        }).then(function (obj) {
-          console.log(obj);
-          var details = obj.map(function (items) {
-            return _react2.default.createElement(
-              'li',
-              { key: items.imdbID },
-              _react2.default.createElement(
-                'div',
-                { className: 'movie-info' },
-                _react2.default.createElement(
-                  'div',
-                  { className: 'image' },
-                  'Plakat'
-                ),
-                _react2.default.createElement(
-                  'h3',
-                  null,
-                  'Tytu\u0142: ',
-                  items.Title
-                ),
-                _react2.default.createElement(
-                  'ul',
-                  null,
-                  _react2.default.createElement(
-                    'li',
-                    null,
-                    'Rok: ',
-                    items.Year
-                  ),
-                  _react2.default.createElement(
-                    'li',
-                    null,
-                    'Gatunek: ',
-                    items.Genre
-                  ),
-                  _react2.default.createElement(
-                    'li',
-                    null,
-                    'Czas trwania: ',
-                    items.Runtime
-                  ),
-                  _react2.default.createElement(
-                    'li',
-                    null,
-                    'Re\u017Cyseria: ',
-                    items.Director
-                  )
-                ),
-                _react2.default.createElement(
-                  'p',
-                  null,
-                  'Opis filmu: ',
-                  items.Plot
-                )
-              )
-            );
-          });
+        }).then(function (info) {
+          console.log('JSON: ', info);
+          _this4.setState({ loading: false, info: info });
         }).catch(function (err) {
           _this4.setState({ title: "ERROR!" });
         });
@@ -9599,15 +9547,56 @@ document.addEventListener('DOMContentLoaded', function () {
         if (this.state.loading) {
           return null;
         } else {
-          return _react2.default.createElement(
+          var details = _react2.default.createElement(
             'div',
-            null,
+            { className: 'movie-info' },
+            _react2.default.createElement(
+              'div',
+              { className: 'image' },
+              _react2.default.createElement('img', { src: this.state.info.Poster })
+            ),
+            _react2.default.createElement(
+              'h3',
+              null,
+              'Movie title: ',
+              this.state.info.Title
+            ),
             _react2.default.createElement(
               'ul',
               null,
-              this.state.infos
+              _react2.default.createElement(
+                'li',
+                null,
+                'Year: ',
+                this.state.info.Year
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Genre: ',
+                this.state.info.Genre
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Runtime: ',
+                this.state.info.Runtime
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Director: ',
+                this.state.info.Director
+              ),
+              _react2.default.createElement(
+                'li',
+                null,
+                'Description: ',
+                this.state.info.Plot
+              )
             )
           );
+          return details;
         }
       }
     }]);
@@ -9626,14 +9615,12 @@ document.addEventListener('DOMContentLoaded', function () {
       _this5.handleClick = function (e) {
         e.preventDefault();
         console.log('kliknięty');
-      };
-
-      _this5.handleChange = function (event) {
-        _this5.setState({ value: event.target.value });
+        console.log(_this5.input.value);
+        _this5.setState({ title: _this5.input.value });
       };
 
       _this5.state = {
-        value: ""
+        title: null
       };
       return _this5;
     }
@@ -9641,6 +9628,9 @@ document.addEventListener('DOMContentLoaded', function () {
     _createClass(SearchMovies, [{
       key: 'render',
       value: function render() {
+        var _this6 = this;
+
+        console.log(this.state.title);
         return _react2.default.createElement(
           'div',
           { className: 'container' },
@@ -9648,14 +9638,16 @@ document.addEventListener('DOMContentLoaded', function () {
           _react2.default.createElement(
             'form',
             { className: 'search-form' },
-            _react2.default.createElement('input', { type: 'text', name: 'search', onChange: this.handleChange, value: this.state.value, placeholder: 'Wpisz tytu\u0142 filmu' }),
+            _react2.default.createElement('input', { type: 'text', name: 'search', ref: function ref(input) {
+                return _this6.input = input;
+              }, placeholder: 'Wpisz tytu\u0142 filmu' }),
             _react2.default.createElement(
               'button',
               { onClick: this.handleClick },
               'Pobierz film'
             )
           ),
-          _react2.default.createElement(MovieInfo, null)
+          _react2.default.createElement(MovieInfo, { title: this.state.title })
         );
       }
     }]);

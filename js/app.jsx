@@ -33,51 +33,46 @@ document.addEventListener('DOMContentLoaded', function(){
       super(props);
       this.state = {
         loading: true,
-        infos: []
+        info: {}
       }
     }
-    // index.html:1 Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 2
     componentDidMount() {
-      fetch('http://www.omdbapi.com/?t=Batman').then( resp =>{
+      console.log('MovieInfo',this.props.title)
+      if (this.props.title === null) {
+        return null;
+      }
+      fetch('http://www.omdbapi.com/?t=' + this.props.title).then( resp =>{
         if (resp.ok) {
           return resp.json();
         } else {
           throw new Error("Błąd sieci");
         }
-      }).then( obj => {
-        console.log(obj);
-        const details = obj.map( (items) => {
-          return <li key={items.imdbID}>
-            <div className="movie-info">
-              <div className="image">
-                Plakat
-              </div>
-              <h3>Tytuł: {items.Title}</h3>
-              <ul>
-                <li>Rok: {items.Year}</li>
-                <li>Gatunek: {items.Genre}</li>
-                <li>Czas trwania: {items.Runtime}</li>
-                <li>Reżyseria: {items.Director}</li>
-              </ul>
-              <p>
-                Opis filmu: {items.Plot}
-              </p>
-            </div>
-          </li>
-        })
+      }).then( info => {
+        console.log('JSON: ', info);
+        this.setState({loading: false, info: info})
       }).catch( (err) => {
           this.setState({title: "ERROR!"})
         });
     }
+
     render(){
       if (this.state.loading) {
-        return null
+        return null;
       } else {
-        return <div>
-          <ul>
-            {this.state.infos}
-          </ul>
-        </div>
+        const details = <div className="movie-info">
+            <div className="image">
+              <img src={this.state.info.Poster}></img>
+            </div>
+            <h3>Movie title: {this.state.info.Title}</h3>
+            <ul>
+              <li>Year: {this.state.info.Year}</li>
+              <li>Genre: {this.state.info.Genre}</li>
+              <li>Runtime: {this.state.info.Runtime}</li>
+              <li>Director: {this.state.info.Director}</li>
+              <li>Description: {this.state.info.Plot}</li>
+            </ul>
+          </div>
+        return details
       }
     }
   }
@@ -86,26 +81,28 @@ document.addEventListener('DOMContentLoaded', function(){
     constructor(props){
       super(props);
       this.state = {
-        value: ""
+        title: null
       }
     }
     handleClick = (e) => {
       e.preventDefault();
       console.log('kliknięty');
-    }
+      console.log(this.input.value);
+        this.setState({title: this.input.value});
 
-    handleChange = (event) => {
-      this.setState({value: event.target.value})
     }
 
     render(){
+      console.log(this.state.title)
       return <div className="container">
               <Header/>
               <form className="search-form">
-                <input type="text" name="search" onChange={this.handleChange} value={this.state.value} placeholder="Wpisz tytuł filmu"></input>
+                <input type="text" name="search" ref={ (input) => {
+                    return this.input = input;
+                  } } placeholder="Wpisz tytuł filmu"></input>
                 <button onClick={this.handleClick}>Pobierz film</button>
               </form>
-              <MovieInfo/>
+              <MovieInfo title={this.state.title} />
             </div>
         }
   }
