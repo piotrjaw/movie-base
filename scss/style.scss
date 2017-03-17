@@ -1,0 +1,41 @@
+$main-border: 1px solid;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: beige;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  .container {
+    width: 1300px;
+    border: $main-border;
+    justify-content: center;
+    header {
+      text-align: center;
+      border: $main-border;
+    }
+    .search-form {
+      text-align: center;
+    }
+    .movie-info {
+      border: $main-border;
+      display: flex;
+      justify-content: space-between;
+
+      .details{
+        border: $main-border;
+        padding: 20px 0 20px 20px;
+
+        ul{
+          padding: 20px 0 20px 20px;
+        }
+        ul li {
+          list-style-type: none;
+        }
+      }
+    }
+  }
+}

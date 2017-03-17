@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import "../scss/style.scss";
+import "../scss/style.scss";
 
 document.addEventListener('DOMContentLoaded', function(){
 
@@ -8,23 +8,21 @@ document.addEventListener('DOMContentLoaded', function(){
     constructor(props){
       super(props);
       this.state = {
-        text: "Witaj w bazie filmów!"
+        text: "Welcome to movies base!"
       }
     }
     componentDidMount() {
       this.timerId = setTimeout( () =>{
-        this.setState({text: "Pobieraj filmy jakie tylko chcesz!"})
+        this.setState({text: "See some details about movie you want!"})
       }, 3000)
     }
     componentWillUnmount() {
       clearTimeout(this.timerId);
     }
     render(){
-      return <div className="container">
-        <header>
+      return <header>
           <h1>{this.state.text}</h1>
         </header>
-      </div>
     }
   }
 
@@ -36,12 +34,13 @@ document.addEventListener('DOMContentLoaded', function(){
         info: {}
       }
     }
-    componentDidMount() {
-      console.log('MovieInfo',this.props.title)
-      if (this.props.title === null) {
+
+    componentWillReceiveProps(props) {
+      console.log('componentWillReceiveProps: ', props.title)
+      if (props.title === null) {
         return null;
       }
-      fetch('http://www.omdbapi.com/?t=' + this.props.title).then( resp =>{
+      fetch('http://www.omdbapi.com/?t=' + props.title).then( resp =>{
         if (resp.ok) {
           return resp.json();
         } else {
@@ -63,14 +62,16 @@ document.addEventListener('DOMContentLoaded', function(){
             <div className="image">
               <img src={this.state.info.Poster}></img>
             </div>
-            <h3>Movie title: {this.state.info.Title}</h3>
-            <ul>
-              <li>Year: {this.state.info.Year}</li>
-              <li>Genre: {this.state.info.Genre}</li>
-              <li>Runtime: {this.state.info.Runtime}</li>
-              <li>Director: {this.state.info.Director}</li>
-              <li>Description: {this.state.info.Plot}</li>
-            </ul>
+            <div className="details">
+              <h3>Movie title: <span>{this.state.info.Title}</span></h3>
+              <ul>
+                <li>Year: {this.state.info.Year}</li>
+                <li>Genre: {this.state.info.Genre}</li>
+                <li>Runtime: {this.state.info.Runtime}</li>
+                <li>Director: {this.state.info.Director}</li>
+                <li>Description: {this.state.info.Plot}</li>
+              </ul>
+            </div>
           </div>
         return details
       }
@@ -81,20 +82,18 @@ document.addEventListener('DOMContentLoaded', function(){
     constructor(props){
       super(props);
       this.state = {
-        title: null
+        title: this.props.title
       }
     }
     handleClick = (e) => {
       e.preventDefault();
       console.log('kliknięty');
-      console.log(this.input.value);
-        this.setState({title: this.input.value});
-
+      console.log('Input value: ', this.input.value);
+      this.setState({title: this.input.value});
     }
 
     render(){
-      console.log(this.state.title)
-      return <div className="container">
+        return <div className="container">
               <Header/>
               <form className="search-form">
                 <input type="text" name="search" ref={ (input) => {
@@ -102,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function(){
                   } } placeholder="Wpisz tytuł filmu"></input>
                 <button onClick={this.handleClick}>Pobierz film</button>
               </form>
-              <MovieInfo title={this.state.title} />
+              <MovieInfo title={this.state.title}/>
             </div>
         }
   }
