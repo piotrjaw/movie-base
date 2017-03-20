@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
     componentDidMount() {
       this.timerId = setTimeout( () =>{
-        this.setState({text: "See some details about movie you want!"})
+        this.setState({text: "Looking for movie info? Get it from the base!"})
       }, 3000)
     }
     componentWillUnmount() {
@@ -63,13 +63,16 @@ document.addEventListener('DOMContentLoaded', function(){
               <img src={this.state.info.Poster}></img>
             </div>
             <div className="details">
-              <h3>Movie title: <span>{this.state.info.Title}</span></h3>
+              <h3>{this.state.info.Title}</h3>
               <ul>
-                <li>Year: {this.state.info.Year}</li>
-                <li>Genre: {this.state.info.Genre}</li>
-                <li>Runtime: {this.state.info.Runtime}</li>
-                <li>Director: {this.state.info.Director}</li>
-                <li>Description: {this.state.info.Plot}</li>
+                <li><span>Year: </span>{this.state.info.Year}</li>
+                <li><span>Genre: </span> {this.state.info.Genre}</li>
+                <li><span>Runtime: </span>{this.state.info.Runtime}</li>
+                <li><span>Director: </span>{this.state.info.Director}</li>
+                <li><span>Actors: </span>{this.state.info.Actors}</li>
+                <li><span>Description: </span>{this.state.info.Plot}</li>
+                <li><span>Awards: </span>{this.state.info.Awards}</li>
+                <li><span>IMDb rating: </span>{this.state.info.imdbRating}</li>
               </ul>
             </div>
           </div>
@@ -96,10 +99,12 @@ document.addEventListener('DOMContentLoaded', function(){
         return <div className="container">
               <Header/>
               <form className="search-form">
-                <input type="text" name="search" ref={ (input) => {
-                    return this.input = input;
-                  } } placeholder="Wpisz tytuł filmu"></input>
-                <button onClick={this.handleClick}>Pobierz film</button>
+                <div className="inputs">
+                  <input type="text" name="search" ref={ (input) => {
+                      return this.input = input;
+                    } } placeholder="Find your favourite movies"></input>
+                  <button onClick={this.handleClick}></button>
+                </div>
               </form>
               <MovieInfo title={this.state.title}/>
             </div>

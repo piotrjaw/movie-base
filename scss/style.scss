@@ -1,4 +1,5 @@
-$main-border: 1px solid;
+$shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+$deeper-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
 
 // @font-face {
 // 	font-family: 'Muli';
@@ -20,40 +21,84 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
+  background-color: #C2383F;
+  color: #FEB7BB;
+  font-size: 18px;
   .container {
     width: 1300px;
-    border: $main-border;
     justify-content: center;
     header {
       display: flex;
       justify-content: center;
       align-items: center;
-      border: $main-border;
       height: 100px;
       h1 {
-        border: $main-border;
+        font-weight: 500;
+        color: #7A0309;
       }
     }
     .search-form {
-      height: 100px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      .inputs {
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        input {
+          width: 35%;
+          height: 40px;
+          padding: 0 10px;
+          border-radius: 7px;
+          font-size: 1.25em;
+        }
+        button {
+          width: 40px;
+          height: 40px;
+          border-radius: 7px;
+          text-transform: uppercase;
+          margin-left: 20px;
+          background-color: #5EC2CB;
+          background-image: url('../img/magnifier.png');
+          background-repeat: no-repeat;
+          background-size: contain;
+          border: 4px solid #5EC2CB;
+          box-shadow: $shadow;
+        }
+      }
     }
     .movie-info {
-      border: $main-border;
       display: flex;
       justify-content: center;
-
+      .image {
+        img {
+          box-shadow: $deeper-shadow;
+        }
+      }
       .details{
-        border: $main-border;
-        padding: 20px 0 20px 20px;
+        margin-left: 40px;
+        h3 {
+          font-size: 2em;
+          text-align: center;
+          background-color: rgba(161, 28, 35, 0.2);
+          box-shadow: $shadow;
+          border-radius: 6px;
+          line-height: 1.5em;
+        }
+        span {
+          font-weight: bold;
+          font-size: 1.15em;
+        }
 
         ul{
-          padding: 20px 0 20px 20px;
+          padding: 30px 30px 30px 30px;
+          margin-top: 10px;
+          background-color: rgba(224, 94, 100, 0.4);
+          box-shadow: $shadow;
+          border-radius: 6px;
+          font-size: 19px;
         }
         ul li {
           list-style-type: none;
+          line-height: 25px;
         }
       }
     }
