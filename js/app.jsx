@@ -114,7 +114,6 @@ document.addEventListener('DOMContentLoaded', function(){
               type="submit"
               disabled={this.state.isInputEmpty}
             />
-            <div>{this.stateisInputEmpty}</div>
           </div>
         </form>
         <MovieInfo title={this.state.title}/>
