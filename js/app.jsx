@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+// import {header} from './components/header.jsx';
 import "../scss/style.scss";
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -110,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function(){
             </div>
         }
   }
+
 
   class App extends React.Component {
     render(){

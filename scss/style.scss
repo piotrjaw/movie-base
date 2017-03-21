@@ -1,14 +1,14 @@
 $shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
 $deeper-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
 
-// @font-face {
-// 	font-family: 'Muli';
-// 	src: local('Muli Regular'), local('Muli-Regular'),
-// 		url('../fonts/Muli-Regular.woff2') format('woff2'),
-// 		url('../fonts/Muli-Regular.woff') format('woff');
-// 	font-weight: normal;
-// 	font-style: normal;
-// }
+@font-face {
+	font-family: 'Catamaran';
+	src: local('Catamaran'), local('Catamaran-Regular'),
+		url('../fonts/Catamaran-Regular.woff2') format('woff2'),
+		url('../fonts/Catamaran-Regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
 
 *{
   margin: 0;
@@ -16,8 +16,7 @@ $deeper-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.19);
   box-sizing: border-box;
 }
 body {
-  // font-family: "Muli";
-  background-color: beige;
+  font-family: 'Catamaran', sans-serif;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -34,12 +33,12 @@ body {
       height: 100px;
       h1 {
         font-weight: 500;
-        color: #7A0309;
+        font-size: 3em;
       }
     }
     .search-form {
       .inputs {
-        height: 100px;
+        height: 150px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -82,6 +81,7 @@ body {
           box-shadow: $shadow;
           border-radius: 6px;
           line-height: 1.5em;
+          font-weight: 500;
         }
         span {
           font-weight: bold;
